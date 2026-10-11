@@ -6,14 +6,15 @@ Sitio estático para GitHub Pages: https://miguelpdv-lgtm.github.io/amalaya-demo
 
 | Archivo | Qué es |
 |---|---|
-| `index.html` · `css/web.css` · `js/web.js` | Web (versión «casa de lujo») |
+| `index.html` · `css/web.css` · `js/web.js` | Web |
 | `design-system.html` | Guía navegable del sistema de diseño |
 | `docs/marca.md` | Investigación, concepto, manifiesto, pilares, personalidad y voz |
 | `design-system/tokens.css` · `components.css` · `motion.css` | Tokens, componentes y movimiento |
 | `design-system/trazo.js` | Motor de animación sin dependencias (curva generada por seno + pluma de punta ancha) |
 | `design-system/tokens.json` | Tokens en formato W3C (DTCG) |
 | `assets/encresparte-mark.svg`, `encresparte-logo*.svg` | Marca y logo **provisionales** |
-| `assets/fotos/salon-real.jpg` | Foto real del salón (fondo del hero) y recortes `detalle-*.jpg` |
+| `assets/fotos/salon-real.jpg` | Foto real del salón (fondo del hero) |
+| `assets/fotos/referencia/` | Fotos de referencia de Pexels (servicios, nosotros, tipos de rizo). Sustituir por fotos propias cuando las haya |
 | `tools/opciones-lujo.html` | Laboratorio en canvas con 4 heros y 4 entradas |
 
 ## Pendiente de material real

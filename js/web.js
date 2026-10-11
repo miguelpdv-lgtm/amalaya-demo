@@ -173,82 +173,9 @@
   }
   entrada();
 
-  /* ---------- Atlas de texturas ---------- */
-  var APUNTES = {
-    '2A': ['Onda suave', 'Una S que apenas se dibuja y cae casi recta desde la raíz.'],
-    '2B': ['Onda marcada', 'La S aparece a media melena y gana forma hacia las puntas.'],
-    '2C': ['Onda honda', 'Ondas profundas que nacen cerca de la raíz.'],
-    '3A': ['Bucle amplio', 'Bucles grandes y brillantes, con mucho movimiento.'],
-    '3B': ['Espiral firme', 'Espirales de buen cuerpo que se agrupan en mechones.'],
-    '3C': ['Espiral estrecha', 'Espirales pequeñas y densas, con mucho volumen.'],
-    '4A': ['Muelle definido', 'Muelles pequeños que conservan la forma de espiral.'],
-    '4B': ['Zigzag', 'Ángulos marcados en lugar de espirales.'],
-    '4C': ['Zigzag compacto', 'El patrón más cerrado y el que más se recoge al secar.']
-  };
-  function montarAtlas() {
-    var pista = $('[data-atlas-pista]');
-    if (!pista) return;
-    Trazo.PATRONES.forEach(function (p) {
-      var a = APUNTES[p.code];
-      var art = document.createElement('article');
-      art.className = 'lamina-atlas';
-      art.innerHTML = '<div class="lamina-atlas__cabeza"><span>Lámina ' + p.code + '</span><span>' + p.familia + '</span></div>' +
-        '<canvas role="img" aria-label="Hebra de patrón ' + p.code + '"></canvas>' +
-        '<h3>' + a[0] + '</h3><p>' + a[1] + '</p>' +
-        '<span class="lamina-atlas__dato">Encogimiento ilustrativo ≈ ' + Math.round(p.encogimiento * 100) + ' %</span>';
-      pista.appendChild(art);
-      var c = $('canvas', art);
-      var pintar = function (k) {
-        var x = Trazo.preparar(c), ctx = x.ctx; ctx.clearRect(0, 0, x.w, x.h);
-        var pts = Trazo.curva(p, { resolucion: 110 }), b = Trazo.limites(pts);
-        var esc = (x.h - 12) / p.ciclos;
-        var anchoC = (b.y1 - b.y0) * esc; if (anchoC > x.w - 24) esc *= (x.w - 24) / anchoC;
-        Trazo.pluma(ctx, Trazo.colocar(pts, { rot: Math.PI / 2, escala: esc, x: x.w / 2 + (b.y0 + b.y1) / 2 * esc, y: 6 }),
-          { ancho: Math.max(5, Math.min(9, x.w / 26)), color: Trazo.token('--color-trazo'), hasta: k });
-      };
-      if ('ResizeObserver' in window) new ResizeObserver(function () { pintar(1); }).observe(c); else pintar(1);
-      art.addEventListener('mouseenter', function () {
-        if (reducido) return;
-        var t0 = performance.now();
-        (function f(now) { var k = Math.min(1, (now - t0) / 700); pintar(1 - Math.pow(1 - k, 3)); if (k < 1) requestAnimationFrame(f); })(t0);
-      });
-      repintar.push(function () { pintar(1); });
-    });
-    $$('[data-atlas]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var l = $('.lamina-atlas', pista); var paso = l ? l.getBoundingClientRect().width + 16 : 300;
-        pista.scrollBy({ left: paso * +b.getAttribute('data-atlas') * 2, behavior: reducido ? 'auto' : 'smooth' });
-      });
-    });
-  }
   var repintar = [];
 
-  /* ---------- Cita privada ---------- */
-  function montarCita() {
-    var form = $('[data-cita]'); if (!form) return;
-    var vista = $('[data-cita-mensaje]'), enviar = $('[data-cita-enviar]');
-    function valor(n) { var el = form.querySelector('input[name="' + n + '"]:checked'); return el ? el.value : ''; }
-    function componer() {
-      var nombre = $('#c-nombre').value.trim();
-      var partes = ['Hola EncrespArte' + (nombre ? ', soy ' + nombre : '') + '.'];
-      partes.push('Me gustaría pedir cita para ' + (valor('servicio') === 'terapia capilar' ? 'terapia capilar' : (valor('servicio') === 'balayage' ? 'un balayage' : 'un ' + valor('servicio'))) + '.');
-      var tex = valor('textura');
-      partes.push(tex ? 'Mi pelo es ' + tex + '.' : 'No sé bien cuál es mi patrón.');
-      var dia = valor('dia');
-      if (dia) partes.push('Si es posible, el ' + dia + '.');
-      partes.push('¿Qué disponibilidad tienen?');
-      var msg = partes.join(' ');
-      vista.textContent = msg;
-      enviar.href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
-    }
-    form.addEventListener('input', componer);
-    form.addEventListener('change', componer);
-    form.addEventListener('submit', function (e) { e.preventDefault(); });
-    componer();
-  }
-  montarCita();
 
-  entradaLista.then(function () { setTimeout(montarAtlas, 120); });
 
   if (window.matchMedia) {
     var mq = window.matchMedia('(prefers-color-scheme: dark)');
