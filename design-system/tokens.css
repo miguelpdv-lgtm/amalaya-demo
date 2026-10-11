@@ -1,0 +1,175 @@
+/* =====================================================================
+   EncrespArte · tokens
+   Concepto «Cada rizo es un trazo». Colores de pigmento sacados del logo
+   real; medidas con nombres de caligrafía y de taller.
+   Fuentes (Google Fonts): Fraunces (display, variable: opsz, wght, SOFT, WONK),
+   Instrument Sans (texto), DM Mono (datos).
+   ===================================================================== */
+
+:root {
+  /* ---------- Pigmentos (base) ---------- */
+  --pigmento-sepia: #3B2A1D;        /* letras del logo (muestreado) */
+  --pigmento-lienzo: #F9F0E7;       /* fondo del logo (muestreado) */
+  --pigmento-siena: #785C44;        /* filetes del lema (muestreado) */
+  --pigmento-carboncillo: #1E150E;  /* el tono más oscuro del logo */
+  --pigmento-gesso: #FFFBF6;        /* imprimación: el blanco del lienzo */
+  --pigmento-ocre: #B7832F;         /* el destello ✨ de la bio */
+  --pigmento-almagre: #9B4A2E;      /* tierra roja: acento de acción */
+
+  /* ---------- Escalas tonales (OKLCH, mismo matiz que la base) ---------- */
+  --sepia-50: #FCF5F1;  --sepia-100: #F3EBE6;  --sepia-200: #E3D8D1;  --sepia-300: #CDBEB3;
+  --sepia-400: #B4A092; --sepia-500: #98816F;  --sepia-600: #7D6756;  --sepia-700: #604F42;
+  --sepia-800: #44382F; --sepia-900: #27201B;
+
+  --siena-50: #FEF5EE;  --siena-100: #F6EBE1;  --siena-200: #E7D8CB;  --siena-300: #D2BCAB;
+  --siena-400: #BA9F87; --siena-500: #A17E61;  --siena-600: #846449;  --siena-700: #654D38;
+  --siena-800: #483728; --siena-900: #291F17;
+
+  --ocre-50: #FFF4E1;   --ocre-100: #FDEAD0;   --ocre-200: #F1D6B3;   --ocre-300: #DFBA87;
+  --ocre-400: #CB9B54;  --ocre-500: #B47800;   --ocre-600: #975E00;   --ocre-700: #734800;
+  --ocre-800: #523300;  --ocre-900: #2F1E02;
+
+  --almagre-50: #FFF0E8;  --almagre-100: #FFE5DA; --almagre-200: #FCCFC0; --almagre-300: #EEB09B;
+  --almagre-400: #DD8D73; --almagre-500: #C86645; --almagre-600: #A94C2C; --almagre-700: #813B22;
+  --almagre-800: #5C2A19; --almagre-900: #35180F;
+
+  /* ---------- Semánticos · tema claro ---------- */
+  --color-fondo: var(--pigmento-lienzo);
+  --color-superficie: var(--pigmento-gesso);
+  --color-superficie-2: var(--siena-100);
+  --color-texto: var(--pigmento-sepia);          /* 12,2:1 sobre lienzo */
+  --color-texto-suave: var(--siena-700);         /* 7,0:1 sobre lienzo */
+  --color-acento: var(--pigmento-siena);         /* 5,5:1 sobre lienzo */
+  --color-enlace: var(--pigmento-almagre);       /* 5,5:1 sobre lienzo */
+  --color-destello: var(--pigmento-ocre);        /* solo decorativo en claro */
+  --color-filete: var(--siena-300);
+  --color-borde: var(--pigmento-sepia);
+  --color-sombra: var(--pigmento-sepia);
+  --color-foco: var(--pigmento-almagre);
+  --color-trazo: var(--pigmento-sepia);
+  --color-trazo-suave: var(--siena-400);
+
+  /* Panel de marca (hero, intro, CTA): igual en los dos temas */
+  --color-panel: var(--pigmento-sepia);
+  --color-panel-hondo: var(--pigmento-carboncillo);
+  --color-panel-texto: var(--pigmento-lienzo);   /* 12,2:1 */
+  --color-panel-suave: var(--siena-200);         /* 9,8:1 */
+  --color-panel-acento: var(--ocre-300);         /* 7,5:1 */
+  --color-trazo-claro: var(--pigmento-lienzo);
+  --color-trazo-acento: var(--ocre-300);
+
+  /* Botón letrero */
+  --boton-fondo: var(--pigmento-gesso);
+  --boton-texto: var(--pigmento-sepia);
+  --boton-borde: var(--pigmento-sepia);
+  --boton-sombra: var(--pigmento-sepia);
+  --boton-relleno: var(--pigmento-sepia);
+  --boton-texto-relleno: var(--pigmento-lienzo);
+
+  /* ---------- Tipografía ---------- */
+  --fuente-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --fuente-texto: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --fuente-datos: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* Escala 1,25 sobre 17px (texto). Los títulos se adaptan al ancho. */
+  --tipo-nota: 0.75rem;        /* 12 */
+  --tipo-pie: 0.875rem;        /* 14 */
+  --tipo-texto: 1.0625rem;     /* 17 */
+  --tipo-entradilla: 1.25rem;  /* 20 */
+  --tipo-subtitulo: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
+  --tipo-titulo: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+  --tipo-cartel: clamp(2.5rem, 1.6rem + 4.2vw, 5.25rem);
+
+  --interlineado-titulo: 1.04;
+  --interlineado-texto: 1.6;
+  --espaciado-versal: 0.14em;   /* mayúsculas de letrero */
+
+  /* Ejes de Fraunces */
+  --fraunces-opsz-cartel: 144;
+  --fraunces-soft: 50;
+  --fraunces-wonk: 1;
+
+  /* ---------- Espaciado (medidas de caligrafía) ---------- */
+  --espacio-punto: 0.25rem;      /* 4  · un punto de pluma */
+  --espacio-trazo: 0.5rem;       /* 8 */
+  --espacio-letra: 0.75rem;      /* 12 */
+  --espacio-palabra: 1rem;       /* 16 */
+  --espacio-renglon: 1.5rem;     /* 24 */
+  --espacio-interlinea: 2rem;    /* 32 */
+  --espacio-parrafo: 3rem;       /* 48 */
+  --espacio-margen: 4rem;        /* 64 */
+  --espacio-pliego: 6rem;        /* 96 */
+  --espacio-folio: 8rem;         /* 128 */
+
+  --medida-texto: 65ch;
+  --medida-pagina: 1200px;
+  --margen-lateral: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+
+  /* ---------- Radios: esquinas rectas ---------- */
+  --radio-filo: 0;
+  --radio-canto: 2px;      /* chips y etiquetas */
+  --radio-cartela: 3px;    /* botones letrero, tarjetas */
+
+  /* ---------- Bordes ---------- */
+  --borde-filete: 1px;
+  --borde-pluma: 2px;
+
+  /* ---------- Sombras ---------- */
+  --sombra-relieve: 4px 4px 0 var(--color-sombra);   /* letrero en reposo */
+  --sombra-huella: 2px 2px 0 var(--color-sombra);    /* letrero hundido */
+  --sombra-veladura: 0 1px 0 rgb(59 42 29 / 0.06), 0 12px 28px -12px rgb(59 42 29 / 0.28);
+
+  color-scheme: light;
+}
+
+/* ---------- Tema oscuro ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-fondo: var(--pigmento-carboncillo);
+    --color-superficie: #2A1F16;
+    --color-superficie-2: #33261B;
+    --color-texto: var(--pigmento-lienzo);        /* 16,0:1 */
+    --color-texto-suave: var(--sepia-300);        /* 9,9:1 */
+    --color-acento: var(--ocre-300);              /* 9,9:1 */
+    --color-enlace: var(--almagre-300);           /* 9,7:1 */
+    --color-destello: var(--ocre-400);
+    --color-filete: #4A3A2C;
+    --color-borde: var(--pigmento-lienzo);
+    --color-sombra: var(--ocre-400);
+    --color-foco: var(--ocre-300);
+    --color-trazo: var(--pigmento-lienzo);
+    --color-trazo-suave: var(--siena-500);
+    --boton-fondo: var(--pigmento-carboncillo);
+    --boton-texto: var(--pigmento-lienzo);
+    --boton-borde: var(--pigmento-lienzo);
+    --boton-sombra: var(--ocre-400);
+    --boton-relleno: var(--pigmento-lienzo);
+    --boton-texto-relleno: var(--pigmento-sepia);
+    --sombra-veladura: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 30px -12px rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --color-fondo: var(--pigmento-carboncillo);
+  --color-superficie: #2A1F16;
+  --color-superficie-2: #33261B;
+  --color-texto: var(--pigmento-lienzo);
+  --color-texto-suave: var(--sepia-300);
+  --color-acento: var(--ocre-300);
+  --color-enlace: var(--almagre-300);
+  --color-destello: var(--ocre-400);
+  --color-filete: #4A3A2C;
+  --color-borde: var(--pigmento-lienzo);
+  --color-sombra: var(--ocre-400);
+  --color-foco: var(--ocre-300);
+  --color-trazo: var(--pigmento-lienzo);
+  --color-trazo-suave: var(--siena-500);
+  --boton-fondo: var(--pigmento-carboncillo);
+  --boton-texto: var(--pigmento-lienzo);
+  --boton-borde: var(--pigmento-lienzo);
+  --boton-sombra: var(--ocre-400);
+  --boton-relleno: var(--pigmento-lienzo);
+  --boton-texto-relleno: var(--pigmento-sepia);
+  --sombra-veladura: 0 1px 0 rgb(0 0 0 / 0.3), 0 14px 30px -12px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}

@@ -1,0 +1,296 @@
+/* =====================================================================
+   EncrespArte · fundamentos y componentes
+   Requiere tokens.css y motion.css.
+   Reglas: esquinas rectas (radio máx. 3px), nada de píldoras, títulos en
+   un solo color y una sola tipografía.
+   ===================================================================== */
+
+/* ---------- Fundamentos ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+  font-size: var(--tipo-texto);
+  line-height: var(--interlineado-texto);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .titulo {
+  font-family: var(--fuente-display);
+  font-weight: 520;
+  font-variation-settings: "SOFT" var(--fraunces-soft), "WONK" var(--fraunces-wonk);
+  color: inherit;                 /* un solo color por título */
+  line-height: var(--interlineado-titulo);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  margin: 0;
+}
+h1 { font-size: var(--tipo-cartel); font-variation-settings: "SOFT" var(--fraunces-soft), "WONK" var(--fraunces-wonk), "opsz" 144; }
+h2 { font-size: var(--tipo-titulo); }
+h3 { font-size: var(--tipo-subtitulo); }
+/* Dentro de un título no se cambia color ni tipografía */
+h1 *, h2 *, h3 * { color: inherit; font-family: inherit; }
+
+p { margin: 0; text-wrap: pretty; }
+img, svg, canvas { max-width: 100%; }
+img { display: block; height: auto; }
+
+a { color: var(--color-enlace); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: var(--borde-pluma) solid var(--color-foco);
+  outline-offset: 3px;
+}
+
+::selection { background: var(--color-texto); color: var(--color-fondo); }
+
+.envoltura {
+  width: 100%;
+  max-width: var(--medida-pagina);
+  margin-inline: auto;
+  padding-inline: var(--margen-lateral);
+}
+
+.visualmente-oculto {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.datos { font-family: var(--fuente-datos); font-variant-numeric: tabular-nums; letter-spacing: 0; }
+
+/* ---------- Etiqueta: versalitas entre filetes, como el lema del logo ---------- */
+.etiqueta {
+  display: inline-flex; align-items: center; gap: var(--espacio-letra);
+  font-family: var(--fuente-datos);
+  font-size: var(--tipo-nota);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--espaciado-versal);
+  color: var(--color-acento);
+}
+.etiqueta::before, .etiqueta--doble::after {
+  content: ""; width: 2rem; height: 0; border-top: var(--borde-pluma) solid currentColor; opacity: 0.8;
+}
+
+/* ---------- Botón letrero ---------- */
+.boton {
+  --_fondo: var(--boton-fondo);
+  --_texto: var(--boton-texto);
+  --_borde: var(--boton-borde);
+  --_sombra: var(--boton-sombra);
+  --_relleno: var(--boton-relleno);
+  --_texto-relleno: var(--boton-texto-relleno);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--espacio-letra);
+  min-height: 3rem;
+  padding: 0.7rem 1.25rem 0.7rem 1.35rem;
+  border: var(--borde-pluma) solid var(--_borde);
+  border-radius: var(--radio-cartela);
+  background: var(--_fondo);
+  color: var(--_texto);
+  box-shadow: 4px 4px 0 var(--_sombra);
+  font-family: var(--fuente-texto);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: var(--espaciado-versal);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform var(--dur-trazo) var(--ease-tinta),
+    box-shadow var(--dur-trazo) var(--ease-tinta),
+    color var(--dur-trazo) var(--ease-tinta);
+  -webkit-tap-highlight-color: transparent;
+}
+/* Relleno con el motivo: una pincelada de borde ondulado entra desde la izquierda */
+.boton::before {
+  content: "";
+  position: absolute; z-index: -1;
+  top: -2px; bottom: -2px; left: 0;
+  width: calc(100% + 28px);
+  background: var(--_relleno);
+  -webkit-mask:
+    linear-gradient(#000 0 0) left / calc(100% - 26px) 100% no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 60' preserveAspectRatio='none'%3E%3Cpath d='M0 0H10C22 7 4 15 14 22S26 37 12 44 20 56 16 60H0Z'/%3E%3C/svg%3E") right / 28px 100% no-repeat;
+          mask:
+    linear-gradient(#000 0 0) left / calc(100% - 26px) 100% no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 60' preserveAspectRatio='none'%3E%3Cpath d='M0 0H10C22 7 4 15 14 22S26 37 12 44 20 56 16 60H0Z'/%3E%3C/svg%3E") right / 28px 100% no-repeat;
+  transform: translateX(-100%);
+  transition: transform var(--dur-firma) var(--ease-tinta);
+}
+.boton:hover, .boton:focus-visible {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--_sombra);
+  color: var(--_texto-relleno);
+}
+.boton:hover::before, .boton:focus-visible::before { transform: translateX(0); }
+.boton:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--_sombra); }
+
+/* Flecha final: un rizo que termina en punta */
+.boton__flecha {
+  flex: none; width: 2.1rem; height: 1rem;
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  overflow: visible;
+}
+.boton__flecha .rizo { stroke-dasharray: 30; stroke-dashoffset: 0; }
+.boton:hover .boton__flecha .rizo, .boton:focus-visible .boton__flecha .rizo {
+  --largo: 30;
+  animation: trazo-dibujar var(--dur-firma) var(--ease-tinta);
+}
+
+/* Sobre el panel oscuro: letrero claro (color claro de la marca) */
+.boton--claro {
+  --_fondo: var(--pigmento-lienzo);
+  --_texto: var(--pigmento-sepia);
+  --_borde: var(--pigmento-lienzo);
+  --_sombra: var(--ocre-400);
+  --_relleno: var(--ocre-300);
+  --_texto-relleno: var(--pigmento-sepia);
+}
+/* Letrero lleno (acción principal sobre fondo claro) */
+.boton--tinta {
+  --_fondo: var(--color-texto);
+  --_texto: var(--color-fondo);
+  --_borde: var(--color-texto);
+  --_sombra: var(--color-destello);
+  --_relleno: var(--color-acento);
+  --_texto-relleno: var(--color-fondo);
+}
+.boton--compacto { min-height: 2.5rem; padding: 0.5rem 0.9rem; font-size: 0.75rem; }
+.boton--compacto .boton__flecha { width: 1.7rem; }
+
+/* ---------- Chip (esquina recta) ---------- */
+.chip {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  min-height: 2rem;
+  padding: 0.25rem 0.65rem;
+  border: var(--borde-filete) solid var(--color-filete);
+  border-radius: var(--radio-canto);
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  font-family: var(--fuente-datos);
+  font-size: var(--tipo-nota);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+.chip--tinta { background: var(--color-texto); color: var(--color-fondo); border-color: var(--color-texto); }
+.chip--provisional {
+  border-style: dashed; border-color: var(--color-acento); color: var(--color-acento); background: transparent;
+}
+
+/* ---------- Selector de patrón (pestañas en cuadrícula) ---------- */
+.selector { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: var(--espacio-trazo); }
+.selector__opcion {
+  appearance: none;
+  display: grid; gap: 2px; justify-items: center;
+  padding: 0.55rem 0.25rem 0.45rem;
+  border: var(--borde-pluma) solid var(--color-filete);
+  border-radius: var(--radio-cartela);
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  font-family: var(--fuente-datos);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color var(--dur-pincelada) var(--ease-tinta), transform var(--dur-trazo) var(--ease-tinta), box-shadow var(--dur-trazo) var(--ease-tinta);
+}
+.selector__opcion small { font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-texto-suave); }
+.selector__opcion:hover { border-color: var(--color-borde); }
+.selector__opcion[aria-selected="true"] {
+  border-color: var(--color-borde);
+  box-shadow: var(--sombra-huella);
+  background: var(--color-texto); color: var(--color-fondo);
+}
+.selector__opcion[aria-selected="true"] small { color: inherit; opacity: 0.8; }
+@media (max-width: 640px) { .selector { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+/* ---------- Cartela (tarjeta de galería) ---------- */
+.cartela {
+  position: relative;
+  display: flex; flex-direction: column; gap: var(--espacio-letra);
+  padding: var(--espacio-renglon);
+  border: var(--borde-filete) solid var(--color-filete);
+  border-radius: var(--radio-cartela);
+  background: var(--color-superficie);
+  min-width: 0;
+}
+.cartela__numero { font-family: var(--fuente-datos); font-size: var(--tipo-nota); color: var(--color-acento); letter-spacing: 0.1em; }
+.cartela h3 { font-size: 1.5rem; }
+.cartela p { color: var(--color-texto-suave); font-size: 1rem; }
+
+/* ---------- Ficha técnica (datos en monoespaciada) ---------- */
+.ficha { display: grid; grid-template-columns: auto 1fr; gap: 0.35rem var(--espacio-palabra); margin: 0; font-size: var(--tipo-pie); }
+.ficha dt { font-family: var(--fuente-datos); font-size: var(--tipo-nota); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-texto-suave); padding-top: 0.15em; }
+.ficha dd { margin: 0; font-family: var(--fuente-datos); font-variant-numeric: tabular-nums; }
+
+/* ---------- Medidor 0–5 (pinceladas) ---------- */
+.medidor { display: grid; grid-template-columns: 9.5rem 1fr auto; align-items: center; gap: var(--espacio-letra); font-size: var(--tipo-pie); }
+.medidor__barra { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; height: 10px; }
+.medidor__barra i {
+  display: block; background: var(--color-filete);
+  clip-path: polygon(0 18%, 100% 0, 96% 82%, 2% 100%);   /* pincelada, no píldora */
+  transition: background var(--dur-trazo) var(--ease-tinta);
+}
+.medidor__barra i.on { background: var(--color-texto); }
+.medidor__valor { font-family: var(--fuente-datos); font-size: var(--tipo-nota); color: var(--color-texto-suave); }
+@media (max-width: 420px) { .medidor { grid-template-columns: 7.5rem 1fr auto; } }
+
+/* ---------- Acordeón (preguntas) ---------- */
+.acordeon { border-top: var(--borde-filete) solid var(--color-filete); }
+.acordeon details { border-bottom: var(--borde-filete) solid var(--color-filete); }
+.acordeon summary {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--espacio-palabra);
+  padding: var(--espacio-renglon) 0;
+  cursor: pointer; list-style: none;
+  font-family: var(--fuente-display); font-size: 1.3rem; font-weight: 480;
+  font-variation-settings: "SOFT" var(--fraunces-soft), "WONK" var(--fraunces-wonk);
+}
+.acordeon summary::-webkit-details-marker { display: none; }
+.acordeon summary::after {
+  content: ""; flex: none; width: 18px; height: 18px;
+  background:
+    linear-gradient(currentColor 0 0) center / 100% 2px no-repeat,
+    linear-gradient(currentColor 0 0) center / 2px 100% no-repeat;
+  transition: transform var(--dur-trazo) var(--ease-tinta);
+}
+.acordeon details[open] summary::after { transform: rotate(45deg); }
+.acordeon .acordeon__cuerpo { padding: 0 0 var(--espacio-renglon); max-width: var(--medida-texto); color: var(--color-texto-suave); }
+
+/* ---------- Filete ---------- */
+.filete { border: 0; border-top: var(--borde-filete) solid var(--color-filete); margin: 0; }
+
+/* ---------- Icono de línea con trazo modulado ---------- */
+.icono { width: 2.5rem; height: 2.5rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.icono .grueso { stroke-width: 2.6; }
+
+/* ---------- Barra de navegación ---------- */
+.barra-nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: color-mix(in srgb, var(--color-fondo) 94%, transparent);
+  -webkit-backdrop-filter: saturate(1.2) blur(8px);
+  backdrop-filter: saturate(1.2) blur(8px);
+  border-bottom: var(--borde-filete) solid var(--color-filete);
+}
+.barra-nav__fila { display: flex; align-items: center; gap: var(--espacio-renglon); min-height: 4.25rem; }
+.barra-nav__logo { display: inline-flex; color: var(--color-texto); flex: none; }
+.barra-nav__logo svg { width: 9.5rem; height: auto; display: block; fill: currentColor; }
+.barra-nav__enlaces { display: flex; gap: var(--espacio-renglon); margin: 0 0 0 auto; padding: 0; list-style: none; }
+.barra-nav__enlaces a {
+  color: var(--color-texto); text-decoration: none; font-size: 0.9375rem; font-weight: 500;
+  padding: 0.4rem 0; background: linear-gradient(currentColor 0 0) left bottom / 0 2px no-repeat;
+  transition: background-size var(--dur-trazo) var(--ease-tinta);
+}
+.barra-nav__enlaces a:hover { background-size: 100% 2px; }
