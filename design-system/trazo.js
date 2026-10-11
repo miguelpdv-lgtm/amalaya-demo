@@ -225,8 +225,8 @@
       pluma(ctx, placed, { ancho: o.ancho || Math.max(3, Math.min(9, c.w / 14)), color: o.color || token('--color-trazo', canvas) || '#3B2A1D', hasta: o.hasta });
     }
     if (o.animar) return bucle(canvas, pintar);
-    pintar(0);
     if ('ResizeObserver' in global) new ResizeObserver(function () { pintar(0); }).observe(canvas);
+    else pintar(0);
     return { repintar: function () { pintar(0); } };
   }
 
@@ -247,7 +247,11 @@
         var q = { w: p.w * (o.giro || 0.8), z: p.z * 0.6 };
         var pts = curva(q, { ciclos: ciclosPara(q, c.w / paso + 2.2), fase: fase, resolucion: 60 });
         var y = c.h * ((i + 0.5) / hebras);
-        var placed = colocar(pts, { escala: paso, x: -paso, y: y });
+        // La amplitud se ajusta a la banda de cada hebra para no cortarse en los bordes.
+        var b = limites(pts), banda = c.h / hebras * (o.solape || 0.85);
+        var ky = Math.min(1, banda / Math.max(1e-6, (b.y1 - b.y0) * paso));
+        var cy = (b.y0 + b.y1) / 2;
+        var placed = pts.map(function (pt) { return { x: -paso + pt.x * paso, y: y + (pt.y - cy) * paso * ky }; });
         ctx.globalAlpha = o.alfa ? o.alfa[i % o.alfa.length] : 1 - i * 0.12;
         pluma(ctx, placed, { ancho: (o.ancho || 5) * (1 - i * 0.08), color: colores[i % colores.length], hasta: o.revelar ? Math.min(1, t / o.revelar) : 1 });
       }
