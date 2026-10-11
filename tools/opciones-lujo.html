@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EncrespArte · Heros de lujo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&family=Instrument+Sans:wght@400..700&display=swap">
+<style>
+  :root { --fondo: #F9F0E7; --texto: #3B2A1D; --suave: #654D38; --filete: #D2BCAB; --panel: #3B2A1D; --acento: #785C44; --sombra: #3B2A1D; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --fondo: #1E150E; --texto: #F9F0E7; --suave: #CDBEB3; --filete: #4A3A2C; --panel: #2A1F16; --acento: #DFBA87; --sombra: #CB9B54; color-scheme: dark; } }
+  :root[data-theme="dark"] { --fondo: #1E150E; --texto: #F9F0E7; --suave: #CDBEB3; --filete: #4A3A2C; --panel: #2A1F16; --acento: #DFBA87; --sombra: #CB9B54; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fondo); color: var(--texto); font: 400 16px/1.55 "Instrument Sans", system-ui, sans-serif; }
+  .envoltura { max-width: 1240px; margin: 0 auto; padding: 32px 16px 80px; display: grid; gap: 40px; }
+  h1, h2 { font-family: Fraunces, Georgia, serif; font-weight: 500; margin: 0; line-height: 1.05; text-wrap: balance; }
+  h1 { font-size: clamp(2rem, 1.4rem + 2.6vw, 3.4rem); }
+  h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); }
+  .eti { font: 500 12px/1 "DM Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--acento); display: inline-flex; gap: 12px; align-items: center; }
+  .eti::before { content: ""; width: 28px; border-top: 2px solid currentColor; }
+  .cabeza { display: grid; gap: 12px; max-width: 60ch; }
+  .cabeza p { color: var(--suave); margin: 0; }
+  .pestanas { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pestanas button { appearance: none; font: 500 13px/1 "DM Mono", monospace; letter-spacing: .06em; padding: 10px 14px; border: 2px solid var(--filete); border-radius: 3px; background: transparent; color: var(--texto); cursor: pointer; }
+  .pestanas button[aria-pressed="true"] { background: var(--texto); color: var(--fondo); border-color: var(--texto); }
+  .escena { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+  .escena canvas { width: 100%; display: block; border: 1px solid var(--filete); border-radius: 3px; background: #3B2A1D; }
+  .escena .pc { aspect-ratio: 1360 / 860; }
+  .escena .movil { aspect-ratio: 390 / 780; }
+  .ficha { display: grid; gap: 8px; padding: 20px; border: 1px solid var(--filete); border-radius: 3px; }
+  .ficha strong { font-family: Fraunces, serif; font-size: 1.4rem; font-weight: 500; }
+  .ficha small { font: 500 12px/1.3 "DM Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--acento); }
+  .ficha p { margin: 0; color: var(--suave); }
+  .boton { justify-self: start; display: inline-flex; gap: 10px; align-items: center; font: 650 12px/1 "Instrument Sans", sans-serif; letter-spacing: .14em; text-transform: uppercase; padding: 13px 18px; border: 2px solid var(--texto); border-radius: 3px; background: var(--fondo); color: var(--texto); box-shadow: 4px 4px 0 var(--sombra); cursor: pointer; transition: transform .24s cubic-bezier(.2,.7,.2,1), box-shadow .24s cubic-bezier(.2,.7,.2,1); }
+  .boton:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--sombra); }
+  .boton:focus-visible, .pestanas button:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
+  .linea { height: 2px; background: var(--filete); position: relative; overflow: hidden; }
+  .linea i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--texto); }
+  @media (max-width: 760px) { .escena { grid-template-columns: minmax(0, 1fr); } .escena .movil { max-width: 260px; } }
+</style>
+</head>
+<body>
+<div class="envoltura">
+  <header class="cabeza">
+    <span class="eti">EncrespArte · revisión</span>
+    <h1>Heros y entradas inspirados en marcas de lujo</h1>
+    <p>Todo está dibujado en canvas con la foto real del salón. Elige un hero y una entrada; cada entrada se reproduce sobre el hero Atelier, que es el que recomiendo.</p>
+  </header>
+
+  <section class="cabeza" style="max-width:none" aria-labelledby="t-heros">
+    <h2 id="t-heros">Heros</h2>
+    <div class="pestanas" role="group" aria-label="Hero" data-pestanas="hero"></div>
+    <div class="escena">
+      <div style="display:grid;gap:16px"><canvas class="pc" data-hero-pc></canvas></div>
+      <div style="display:grid;gap:16px"><canvas class="movil" data-hero-movil></canvas><div class="ficha" data-ficha-hero></div></div>
+    </div>
+  </section>
+
+  <section class="cabeza" style="max-width:none" aria-labelledby="t-entradas">
+    <h2 id="t-entradas">Animaciones de entrada</h2>
+    <div class="pestanas" role="group" aria-label="Entrada" data-pestanas="intro"></div>
+    <div class="escena">
+      <div style="display:grid;gap:12px"><canvas class="pc" data-intro-pc></canvas><div class="linea" aria-hidden="true"><i data-progreso></i></div></div>
+      <div style="display:grid;gap:16px"><canvas class="movil" data-intro-movil></canvas><div class="ficha" data-ficha-intro></div></div>
+    </div>
+  </section>
+</div>
+<script src="../design-system/trazo.js"></script>
+<script src="logo-paths.js"></script>
+<script src="opciones-lujo.js"></script>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var img = new Image(); img.src = window.FOTO_SALON || '../assets/fotos/salon-real.jpg';
+  function lienzo(c, w, h) {
+    var r = c.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = w || r.width, H = h || r.height;
+    c.width = Math.round(W * dpr); c.height = Math.round(H * dpr);
+    var ctx = c.getContext('2d'); ctx.setTransform(dpr * (r.width && !w ? 1 : 1), 0, 0, dpr, 0, 0);
+    if (w) { ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    return { ctx: ctx, W: W, H: H };
+  }
+  // Modo exportación: ?modo=hero|intro&op=0..3&w=&h=&t=
+  async function preparar() {
+    await img.decode();
+    await Promise.all(['500 40px Fraunces', '400 16px "Instrument Sans"', '650 13px "Instrument Sans"', '500 12px "DM Mono"', '400 13px "DM Mono"'].map(function (f) { return document.fonts.load(f); }));
+  }
+  if (q.get('modo')) {
+    document.body.innerHTML = '<canvas id="c"></canvas>';
+    document.body.style.background = '#000';
+    preparar().then(function () {
+      var W = +q.get('w') || 1360, H = +q.get('h') || 860, op = +q.get('op') || 0;
+      var c = document.getElementById('c'); c.style.width = W + 'px'; c.style.height = H + 'px';
+      c.width = W; c.height = H; var ctx = c.getContext('2d');
+      if (q.get('modo') === 'hero') Opciones.HEROS[op].dibujar(ctx, W, H, img, 1);
+      else Opciones.ENTRADAS[op].dibujar(ctx, W, H, img, +q.get('t') || 0);
+      document.title = 'listo';
+    });
+    return;
+  }
+  var hero = 1, intro = 0, t0 = 0, raf = 0;
+  function fichas(el, o, extra) {
+    el.innerHTML = '<small>' + (extra || '') + 'Inspiración: ' + o.inspira + '</small><strong>' + o.nombre + '</strong><p>' + o.resumen + '</p>';
+  }
+  function pintarHero() {
+    var a = lienzo(document.querySelector('[data-hero-pc]'));
+    Opciones.HEROS[hero].dibujar(a.ctx, a.W, a.H, img, 1);
+    var b = lienzo(document.querySelector('[data-hero-movil]'));
+    Opciones.HEROS[hero].dibujar(b.ctx, b.W, b.H, img, 1);
+    fichas(document.querySelector('[data-ficha-hero]'), Opciones.HEROS[hero], hero === 1 ? 'Recomendado · ' : '');
+  }
+  var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function reproducir() {
+    cancelAnimationFrame(raf);
+    var e = Opciones.ENTRADAS[intro];
+    var a = lienzo(document.querySelector('[data-intro-pc]')), b = lienzo(document.querySelector('[data-intro-movil]'));
+    var barra = document.querySelector('[data-progreso]');
+    t0 = performance.now();
+    (function frame(now) {
+      var t = reducido ? e.duracion : (now - t0) / 1000;
+      e.dibujar(a.ctx, a.W, a.H, img, Math.min(t, e.duracion));
+      e.dibujar(b.ctx, b.W, b.H, img, Math.min(t, e.duracion));
+      barra.style.width = Math.min(100, t / e.duracion * 100) + '%';
+      if (t < e.duracion + 0.05) raf = requestAnimationFrame(frame);
+    })(t0);
+  }
+  function pestanas(cont, lista, alElegir, actual) {
+    lista.forEach(function (o, i) {
+      var b = document.createElement('button'); b.type = 'button';
+      b.textContent = (i + 1) + ' · ' + o.nombre; b.setAttribute('aria-pressed', String(i === actual));
+      b.addEventListener('click', function () { cont.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); alElegir(i); });
+      cont.appendChild(b);
+    });
+  }
+  preparar().then(function () {
+    pestanas(document.querySelector('[data-pestanas="hero"]'), Opciones.HEROS, function (i) { hero = i; pintarHero(); }, hero);
+    pestanas(document.querySelector('[data-pestanas="intro"]'), Opciones.ENTRADAS, function (i) { intro = i; fichas(document.querySelector('[data-ficha-intro]'), Opciones.ENTRADAS[i], (i === 0 ? 'Recomendada · ' : '') + Opciones.ENTRADAS[i].duracion.toFixed(1) + ' s · '); reproducir(); }, intro);
+    var fi = document.querySelector('[data-ficha-intro]');
+    fichas(fi, Opciones.ENTRADAS[0], 'Recomendada · 1.9 s · ');
+    var rep = document.createElement('button'); rep.className = 'boton'; rep.type = 'button'; rep.textContent = 'Repetir entrada';
+    rep.addEventListener('click', reproducir);
+    document.querySelector('[data-ficha-intro]').parentNode.appendChild(rep);
+    pintarHero(); reproducir();
+    var to = 0; window.addEventListener('resize', function () { clearTimeout(to); to = setTimeout(function () { pintarHero(); reproducir(); }, 150); });
+  });
+})();
+</script>
+</body>
+</html>

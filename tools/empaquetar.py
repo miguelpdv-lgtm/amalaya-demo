@@ -10,11 +10,10 @@ def bundle(src, out):
     h = re.sub(r'<script src="((?:design-system|js)/[^"?]+)\?v=\d+"></script>',
                lambda m: '<script>\n' + open(os.path.join(R, m.group(1)), encoding='utf8').read().replace('</script', '<\\/script') + '\n</script>', h)
     h = re.sub(r'<link rel="preload"[^>]*>\n?', '', h)
-    salon = datauri('assets/fotos/salon-800.jpg', 'image/jpeg')
-    h = re.sub(r'src="assets/fotos/salon\.jpg\?v=\d+" srcset="[^"]*" sizes="[^"]*"', 'src="' + salon + '"', h)
-    h = h.replace('href="assets/favicon.svg?v=2"', 'href="' + datauri('assets/favicon.svg', 'image/svg+xml') + '"')
-    for a in ('encresparte-mark.svg', 'favicon.svg'):
-        h = re.sub(r'src="assets/%s\?v=\d+"' % re.escape(a), 'src="' + datauri('assets/' + a, 'image/svg+xml') + '"', h)
+    h = re.sub(r'\s(?:srcset|sizes|imagesrcset|imagesizes)="[^"]*"', '', h)
+    MIME = {'.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml'}
+    h = re.sub(r'(src|href)="(assets/[^"?]+\.(?:jpg|png|svg))\?v=\d+"',
+               lambda m: m.group(1) + '="' + datauri(m.group(2), MIME[os.path.splitext(m.group(2))[1]]) + '"', h)
     h = re.sub(r'href="(design-system\.html|index\.html|design-system/tokens\.json)(\?v=\d+)?', lambda m: 'target="_blank" href="' + PAGES + ('' if m.group(1) == 'index.html' else m.group(1)), h)
     # El artefacto lleva su propio esqueleto
     h = re.sub(r'<!doctype html>\s*<html lang="es">\s*<head>\s*', '', h)
